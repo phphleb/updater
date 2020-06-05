@@ -1,0 +1,28 @@
+{
+    "name": "phphleb/updater",
+    "description": "Auto-update resources in the HLEB framework",
+    "type": "library",
+    "homepage": "https://phphleb.ru",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Foma Tuturov",
+            "email": "fomiash@yandex.ru"
+        }
+    ],
+    "config": {
+        "optimize-autoloader": false
+    },
+    "autoload": {
+        "exclude-from-classmap": ["/hleb-project-ratio/"],
+        "psr-4": {
+            "Phphleb\\Updater\\": "/"
+        }
+    },
+    "require": {
+        "php": "^7.0.0",
+        "phphleb/framework": "^1.5"
+    },
+    "minimum-stability": "dev"
+
+}
