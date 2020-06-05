@@ -9,7 +9,7 @@ Auto-update resources from the PHP Micro-Framework HLEB
  At the same time, it solves typical tasks, such as routing, shifting actions to controllers, model support, so, the basic MVC implementation. This is the very minimum you need to quickly launch an application.
  
  
- ##U_P_D_A_T_E_R
+ ## U_P_D_A_T_E_R
  Install using Composer:
  ```bash
  $ composer require phphleb/updater
