@@ -26,7 +26,7 @@ Test run from the root directory of the HLEB project:
 Sample package installation:
 
  ```bash
- $ composer php console phphleb/updater --add
+ $ php console phphleb/updater --add
  ```
 
  ```bash
