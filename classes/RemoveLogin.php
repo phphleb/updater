@@ -32,7 +32,7 @@ class RemoveLogin
         foreach($list as $path){
             if($this->deleteDirectory($path)) {
                 if($this->origin) {
-                    $this->log->print("\n" . "[-] DELETE directory [" . $path . DIR_S . "*]");
+                    $this->log->print("\n" . "[-] DELETE directory [" . $path . DIRECTORY_SEPARATOR . "*]");
                     $count++;
                 }
             }

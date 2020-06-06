@@ -4,7 +4,7 @@ namespace Phphleb\Updater\Classes;
 
 class OutputLog implements LogInterface
 {
-     public function die($text) {
+     public function die(string $text) {
          die($text);
      }
 

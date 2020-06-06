@@ -21,7 +21,7 @@ class FileRemover
      * @param string $directory
      */
     public function __construct(string $directory) {
-        require_once __DIR__ . "/config.php";
+        require_once __DIR__ . "/loader.php";
         $this->directory = $directory;
         $this->log = new OutputLog();
     }

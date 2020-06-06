@@ -6,7 +6,7 @@
 
     require __DIR__ . "/FileRemover.php";
 
-    $uploader = new \Phphleb\Updater\FileRemover(__DIR__ . DIRECTORY_SEPARATOR . "hleb-project-ratio");
+    $uploader = new \Phphleb\Updater\FileRemover(__DIR__ . DIRECTORY_SEPARATOR);
 
     $uploader->setSpecialNames('example-directory', 'ExampleDirectory');
 

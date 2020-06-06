@@ -8,8 +8,6 @@ class AddLogin
 
     protected $log;
 
-    protected $cleaner;
-
     protected $num = 0;
     
     function __construct(SearchDirections $files, LogInterface $log) {
@@ -21,7 +19,7 @@ class AddLogin
         $errors = $this->files->getErrors();
 
         if (count($errors)) {
-            $this->log->die("\n" . "You must create the '" . DIR_S . $errors[0] . "' directory in project!" . "\n");
+            $this->log->die("\n" . "You must create the '" . DIRECTORY_SEPARATOR . $errors[0] . "' directory in project!" . "\n");
         }
         // Clear all
         (new RemoveLogin($this->files, $this->log, false))->run();
@@ -53,7 +51,7 @@ class AddLogin
 
         foreach ($iterator as $object) {
             $tag = "[+] CREATED";
-            $destPath = $destDirectory . DIR_S . $iterator->getSubPathName();
+            $destPath = $destDirectory . DIRECTORY_SEPARATOR . $iterator->getSubPathName();
             if(file_exists($destPath)) {
                 $tag = '[>] UPDATED';
             }

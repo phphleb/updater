@@ -8,7 +8,7 @@
 
     $designPatterns = ['base', 'dark']; // The first value will be the main
 
-    $uploader = new \Phphleb\Updater\FileUploader(__DIR__ . DIRECTORY_SEPARATOR . "hleb-project-ratio");
+    $uploader = new \Phphleb\Updater\FileUploader(__DIR__ . DIRECTORY_SEPARATOR . "hleb-project-relationship");
 
     $uploader->setDesign($designPatterns);
 

@@ -12,6 +12,8 @@ class SearchDirections
 
     protected $globalDesign = "base";
 
+    protected $globalBaseDesign = 'base';
+
     protected $pluginDirectory;
 
     protected $baseDirectory;
@@ -23,6 +25,12 @@ class SearchDirections
     protected $publicDirectory;
 
     protected $publicJsDirectory;
+
+    protected $publicCssDirectory;
+
+    protected $publicImagesDirectory;
+
+    protected $publicSvgDirectory;
 
     protected $storageDirectory;
 
@@ -36,11 +44,21 @@ class SearchDirections
 
     protected $baseDirectoryOrigin;
 
+    protected $actualOriginList = [];
+
     protected $appDirectoryOrigin;
 
     protected $controllersDirectoryOrigin;
 
     protected $publicDirectoryOrigin;
+
+    protected $publicJsDirectoryOrigin;
+
+    protected $publicCssDirectoryOrigin;
+
+    protected $publicImagesDirectoryOrigin;
+
+    protected $publicSvgDirectoryOrigin;
 
     protected $storageDirectoryOrigin;
 
@@ -83,7 +101,7 @@ class SearchDirections
 
         $this->designPatterns = $designPatterns;
 
-        $globalDesign = $designPatterns[0];
+        $this->globalBaseDesign = $designPatterns[0];
 
         $this->pluginDirectory = $pluginDirectory;
 
@@ -94,21 +112,27 @@ class SearchDirections
 
         $this->searchDirectory('app', 'appDirectory', $this->className);
 
-        $this->searchDirectory('app' . DIR_S . 'Controllers', 'controllersDirectory', $this->className);
+        $this->searchDirectory('app' . DIRECTORY_SEPARATOR . 'Controllers', 'controllersDirectory', $this->className);
 
         $this->searchDirectory('public', 'publicDirectory', $this->directoryName, true);
 
         $this->searchDirectory('storage', 'storageDirectory', $this->directoryName, true);
 
-        $this->searchDirectory('storage' . DIR_S . 'public', 'storageDirectory', $this->directoryName, $this->listNames['storage'] . DIR_S . 'public');
+        $this->searchDirectory('storage' . DIRECTORY_SEPARATOR . 'public', 'storageDirectory', $this->directoryName, $this->listNames['storage'] . DIRECTORY_SEPARATOR . 'public');
 
-        $this->searchDirectory('public' . DIR_S . 'js', 'publicJsDirectory', $this->directoryName, true, $this->listNames['public'] . DIR_S . 'js');
+        $this->searchDirectory('public' . DIRECTORY_SEPARATOR . 'js', 'publicJsDirectory', $this->directoryName, true, $this->listNames['public'] . DIRECTORY_SEPARATOR . 'js');
 
-        $this->searchDirectory('resources' . DIR_S . 'views', 'resourcesDirectory', $this->directoryName);
+        $this->searchDirectory('public' . DIRECTORY_SEPARATOR . 'css', 'publicCssDirectory', $this->directoryName, true, $this->listNames['public'] . DIRECTORY_SEPARATOR . 'css');
+
+        $this->searchDirectory('public' . DIRECTORY_SEPARATOR . 'images', 'publicImagesDirectory', $this->directoryName, true, $this->listNames['public'] . DIRECTORY_SEPARATOR . 'images');
+
+        $this->searchDirectory('public' . DIRECTORY_SEPARATOR . 'svg', 'publicSvgDirectory', $this->directoryName, true, $this->listNames['public'] . DIRECTORY_SEPARATOR . 'svg');
+
+        $this->searchDirectory('resources' . DIRECTORY_SEPARATOR . 'views', 'resourcesDirectory', $this->directoryName);
 
         $this->searchDirectory('routes', 'routesDirectory', $this->directoryName);
 
-        $this->searchDirectory('app' . DIR_S . 'Middleware' . DIR_S . 'Before', 'middlewareDirectory', $this->className);
+        $this->searchDirectory('app' . DIRECTORY_SEPARATOR . 'Middleware' . DIRECTORY_SEPARATOR . 'Before', 'middlewareDirectory', $this->className);
 
     }
 
@@ -172,6 +196,18 @@ class SearchDirections
         return $this->publicJsDirectoryOrigin;
     }
 
+    public function getPublicCssOriginPath() {
+        return $this->publicCssDirectoryOrigin;
+    }
+
+    public function getPublicImagesOriginPath() {
+        return $this->publicImagesDirectoryOrigin;
+    }
+
+    public function getPublicSvgOriginPath() {
+        return $this->publicSvgDirectoryOrigin;
+    }
+
     public function getStoragePublicOriginPath() {
         return $this->storageDirectoryOrigin;
     }
@@ -226,6 +262,10 @@ class SearchDirections
         $this->globalDesign = $design;
     }
 
+    protected function readlineDir(string $name) {
+        return $this->log->readline("Enter the current '$name' folder name>");
+    }
+
     /**
      * @param string $name - origin directory name
      * @param string $value - params name
@@ -236,9 +276,9 @@ class SearchDirections
     private function searchDirectory(string $name, string $value, string $system, bool $search = false, $target = null) {
         $originDirectory = $value . 'Origin';
         $actualName = empty($target) ? $name : $target;
-        if ($search && !file_exists($this->baseDirectory . DIR_S . $actualName)) {
+        if ($search && !file_exists($this->baseDirectory . DIRECTORY_SEPARATOR . $actualName)) {
             $actualName = $this->readlineDir($name);
-            if (!file_exists($this->baseDirectory . DIR_S . $actualName)) {
+            if (!file_exists($this->baseDirectory . DIRECTORY_SEPARATOR . $actualName)) {
                 $this->searchDirectory($name, $value, $system, true);
                 return;
             }
@@ -246,12 +286,13 @@ class SearchDirections
                 $this->listNames[$name] = $actualName;
             }
         }
-        if (file_exists($this->baseDirectory . DIR_S . $actualName)) {
+        if (file_exists($this->baseDirectory . DIRECTORY_SEPARATOR . $actualName)) {
 
-            $this->$value = $this->baseDirectory . DIR_S . $actualName . DIR_S . $system;
-            $systemResource = $this->pluginDirectory .  DIR_S . $name . DIR_S . $system;
-            $baseRecource = $systemResource . DIR_S . "base";
-            $designRecource = $systemResource . DIR_S . $this->globalDesign;
+            $this->$value = $this->baseDirectory . DIRECTORY_SEPARATOR . $actualName . DIRECTORY_SEPARATOR . $system;
+            $systemResource = $this->pluginDirectory .  DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $system;
+            $baseRecource = $systemResource . DIRECTORY_SEPARATOR . $this->globalBaseDesign;
+            $designRecource = $systemResource . DIRECTORY_SEPARATOR . $this->globalDesign;
+            // If the design is not found, then the basic
             if(!file_exists($designRecource)){
                 $designRecource = $baseRecource;
             }
@@ -260,7 +301,7 @@ class SearchDirections
                 $this->actualList[] = $this->$value;
             }
             if (is_dir($this->$originDirectory)) {
-                $this->actuaOriginlList[] = $this->$originDirectory;
+                $this->actualOriginList[] = $this->$originDirectory;
             }
             $this->originList[] = $this->$originDirectory;
             $this->targetList[] = $this->$value;
@@ -268,10 +309,5 @@ class SearchDirections
             $this->errors[] = $name;
         }
     }
-
-    private function readlineDir(string $name) {
-        return $this->log->readline("Enter the current '$name' folder name>");
-    }
- 
 
 }
