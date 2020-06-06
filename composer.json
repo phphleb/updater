@@ -11,7 +11,7 @@
         }
     ],
     "config": {
-        "optimize-autoloader": false
+        "optimize-autoloader": true
     },
     "autoload": {
         "exclude-from-classmap": ["/hleb-project-ratio/"],
@@ -21,7 +21,7 @@
     },
     "require": {
         "php": "^7.0.0",
-        "phphleb/framework": "^1.5"
+        "phphleb/framework": ">=1.5.15"
     },
     "minimum-stability": "dev"
 
