@@ -64,9 +64,6 @@ class SearchDirections
     
     protected $log;
     
-    protected $libraryPath;
-    
-    protected $libraryClassName;
 
     /**
      * If the resulting paths change
@@ -76,15 +73,11 @@ class SearchDirections
         'storage' => 'storage',
     ];
 
-    function __construct(string $pluginDirectory, LogInterface $log, array $designPatterns, string $directoryName, string $className, string $libraryPath = null, string $libraryClassName = null) {
+    function __construct(string $pluginDirectory, LogInterface $log, array $designPatterns, string $directoryName, string $className) {
 
         $this->log = $log;
 
         $this->directoryName = $directoryName;
-
-        $this->libraryPath = $libraryPath;
-
-        $this->libraryClassName = $libraryClassName;
 
         $this->className = $className;
 
@@ -231,8 +224,6 @@ class SearchDirections
             return;
         }
         $this->globalDesign = $design;
-
-        $this->createSpecFile($design);
     }
 
     /**
@@ -281,15 +272,6 @@ class SearchDirections
     private function readlineDir(string $name) {
         return $this->log->readline("Enter the current '$name' folder name>");
     }
-    
-    private function createSpecFile(string $name) {
-        
-        $content = "<?php" . "\n" . "\n" .
-            "namespace Phphleb\\{$this->libraryClassName};" . "\n" . "\n" .
-            "class SpecDeterminant" . "\n" .
-            "{" . "\n" . "  const SPEC_NAME = '$name';" . "\n" . "}" . "\n";
-
-        file_put_contents($this->libraryPath . DIR_S . "SpecDeterminant.php", $content);
-    }
+ 
 
 }

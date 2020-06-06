@@ -14,8 +14,6 @@
 
     $uploader->setPluginNamespace(__DIR__, 'Updater');
 
-    $uploader->setUniqueClassLabel("\\U_P_D_A_T_E_R");
-
     $uploader->setSpecialNames('example-directory', 'ExampleDirectory');
 
     $uploader->run();

@@ -12,10 +12,9 @@ class AddLogin
 
     protected $num = 0;
     
-    function __construct(SearchDirections $files, LogInterface $log, string $uniqueClassTag) {
+    function __construct(SearchDirections $files, LogInterface $log) {
         $this->files = $files;
         $this->log = $log;
-        $this->cleaner = new ClearTags($uniqueClassTag);
     }
 
     public function run() {
@@ -62,9 +61,9 @@ class AddLogin
             if ($object->isFile()) {
                 if(file_exists($destPath)) {
 
-                    $parts = explode('.', $destPath);
-                    if(count($parts) && end($parts) === 'php') {
-                        $this->cleaner->handler($destPath);
+                    $parts = explode('-', $destPath);
+                    if(count($parts) && array_pop($parts) === 'upd') {
+                        rename($destPath, $destPath = implode('-', $parts));
                     }
 
                     $this->log->print( "\n" . $tag . " file [" . $destPath . "]");

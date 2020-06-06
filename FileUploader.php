@@ -45,10 +45,6 @@ class FileUploader
         $this->pluginClassName = $libraryClassName;
     }
 
-    public function setUniqueClassLabel(string $tag) {
-        $this->uniqueClassTag = $tag;
-    }
-
     public function run() {
 
         $updater = new SearchDirections(
@@ -56,16 +52,14 @@ class FileUploader
             $this->log,
             $this->designPatterns,
             $this->directoryName,
-            $this->className,
-            $this->pluginPath,
-            $this->pluginClassName
-        );
+            $this->className
+         );
 
         $updater->setDesign();
 
         $updater->run();
 
-        (new AddLogin($updater, $this->log, $this->uniqueClassTag))->run();
+        (new AddLogin($updater, $this->log))->run();
     }
 
 }

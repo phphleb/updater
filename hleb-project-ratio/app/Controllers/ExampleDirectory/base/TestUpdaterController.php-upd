@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\ExampleDirectory\U_P_D_A_T_E_R;
+namespace App\Controllers\ExampleDirectory;
 
 class TestUpdaterController extends \MainController
 {

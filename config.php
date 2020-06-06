@@ -8,5 +8,4 @@ include_once __DIR__ . "/classes/OutputLog.php";
 include_once __DIR__ . "/classes/AddLogin.php";
 include_once __DIR__ . "/classes/RemoveLogin.php";
 include_once __DIR__ . "/classes/DataCreator.php";
-include_once __DIR__ . "/classes/ClearTags.php";
 
