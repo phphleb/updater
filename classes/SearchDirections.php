@@ -259,6 +259,7 @@ class SearchDirections
             $this->setDesign($original);
             return;
         }
+        Data::setDesign($design);
         $this->globalDesign = $design;
     }
 
