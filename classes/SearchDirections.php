@@ -128,6 +128,8 @@ class SearchDirections
 
         $this->searchDirectory('public' . DIRECTORY_SEPARATOR . 'svg', 'publicSvgDirectory', $this->directoryName, true, $this->listNames['public'] . DIRECTORY_SEPARATOR . 'svg');
 
+        $this->searchDirectory('resources', 'resourcesDirectory', $this->directoryName);
+
         $this->searchDirectory('resources' . DIRECTORY_SEPARATOR . 'views', 'resourcesDirectory', $this->directoryName);
 
         $this->searchDirectory('routes', 'routesDirectory', $this->directoryName);
