@@ -75,6 +75,6 @@ class AddLogin
 
     protected function revertAllFiles() {
         (new RemoveLogin($this->files, $this->log, false))->run();
-        $this->log->die("\n" . "Failed to copy authorization files (" . "\n");
+        $this->log->die("\n" . "Failed structure to copy files :(" . "\n");
     }
 }

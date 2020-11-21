@@ -21,7 +21,8 @@
     },
     "require": {
         "php": "^7.0.0",
-        "phphleb/framework": ">=1.5.15"
+        "phphleb/framework": ">=1.5.15",
+        "ext-readline": "*"
     },
     "minimum-stability": "dev"
 

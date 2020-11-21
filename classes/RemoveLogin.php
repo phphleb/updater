@@ -18,7 +18,7 @@ class RemoveLogin
 
     public function run() {
         if($this->origin) {
-            if ($this->confirm('Remove authorization from the project?') === false) {
+            if ($this->confirm('Remove changes from the project?') === false) {
                 return;
             }
         }
