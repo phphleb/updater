@@ -42,7 +42,7 @@ class AddLogin
         }
     }
 
-    public function copyRecursiveFiles(string $sourceDirectory, string $destDirectory, $mode = 0755) {
+    public function copyRecursiveFiles(string $sourceDirectory, string $destDirectory, $mode = 0775) {
         if (!file_exists($destDirectory)) {
             mkdir($destDirectory, $mode, true);
         }
