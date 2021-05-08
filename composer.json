@@ -14,7 +14,7 @@
         "optimize-autoloader": true
     },
     "autoload": {
-        "exclude-from-classmap": ["/hleb-project-ratio/"],
+        "exclude-from-classmap": ["/hleb-project-relationship/"],
         "psr-4": {
             "Phphleb\\Updater\\": "/"
         }

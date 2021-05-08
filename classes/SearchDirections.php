@@ -22,6 +22,10 @@ class SearchDirections
 
     protected $controllersDirectory;
 
+    protected $commandsDirectory;
+
+    protected $modelsDirectory;
+
     protected $publicDirectory;
 
     protected $publicJsDirectory;
@@ -79,9 +83,9 @@ class SearchDirections
     protected $actualList = [];
 
     protected $errors = [];
-    
+
     protected $log;
-    
+
 
     /**
      * If the resulting paths change
@@ -114,6 +118,10 @@ class SearchDirections
 
         $this->searchDirectory('app' . DIRECTORY_SEPARATOR . 'Controllers', 'controllersDirectory', $this->className);
 
+        $this->searchDirectory('app' . DIRECTORY_SEPARATOR . 'Commands', 'commandsDirectory', $this->className);
+
+        $this->searchDirectory('app' . DIRECTORY_SEPARATOR . 'Models', 'modelsDirectory', $this->className);
+
         $this->searchDirectory('public', 'publicDirectory', $this->directoryName, true);
 
         $this->searchDirectory('storage', 'storageDirectory', $this->directoryName, true);
@@ -143,11 +151,19 @@ class SearchDirections
     }
 
     public function getAppPath() {
-       return $this->appDirectory;
+        return $this->appDirectory;
     }
 
     public function getAppControllersPath() {
         return $this->controllersDirectory;
+    }
+
+    public function getAppCommandsPath() {
+        return $this->commandsDirectory;
+    }
+
+    public function getAppModelsPath() {
+        return $this->modelsDirectory;
     }
 
     public function getPublicPath() {
