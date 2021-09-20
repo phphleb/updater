@@ -122,19 +122,19 @@ class SearchDirections
 
         $this->searchDirectory('app' . DIRECTORY_SEPARATOR . 'Models', 'modelsDirectory', $this->className);
 
-        $this->searchDirectory('public', 'publicDirectory', $this->directoryName, true);
+        //$this->searchDirectory('public', 'publicDirectory', $this->directoryName, true);
 
         $this->searchDirectory('storage', 'storageDirectory', $this->directoryName, true);
 
         $this->searchDirectory('storage' . DIRECTORY_SEPARATOR . 'public', 'storageDirectory', $this->directoryName, $this->listNames['storage'] . DIRECTORY_SEPARATOR . 'public');
 
-        $this->searchDirectory('public' . DIRECTORY_SEPARATOR . 'js', 'publicJsDirectory', $this->directoryName, true, $this->listNames['public'] . DIRECTORY_SEPARATOR . 'js');
+        //$this->searchDirectory('public' . DIRECTORY_SEPARATOR . 'js', 'publicJsDirectory', $this->directoryName, true, $this->listNames['public'] . DIRECTORY_SEPARATOR . 'js');
 
-        $this->searchDirectory('public' . DIRECTORY_SEPARATOR . 'css', 'publicCssDirectory', $this->directoryName, true, $this->listNames['public'] . DIRECTORY_SEPARATOR . 'css');
+        //$this->searchDirectory('public' . DIRECTORY_SEPARATOR . 'css', 'publicCssDirectory', $this->directoryName, true, $this->listNames['public'] . DIRECTORY_SEPARATOR . 'css');
 
-        $this->searchDirectory('public' . DIRECTORY_SEPARATOR . 'images', 'publicImagesDirectory', $this->directoryName, true, $this->listNames['public'] . DIRECTORY_SEPARATOR . 'images');
+        //$this->searchDirectory('public' . DIRECTORY_SEPARATOR . 'images', 'publicImagesDirectory', $this->directoryName, true, $this->listNames['public'] . DIRECTORY_SEPARATOR . 'images');
 
-        $this->searchDirectory('public' . DIRECTORY_SEPARATOR . 'svg', 'publicSvgDirectory', $this->directoryName, true, $this->listNames['public'] . DIRECTORY_SEPARATOR . 'svg');
+        //$this->searchDirectory('public' . DIRECTORY_SEPARATOR . 'svg', 'publicSvgDirectory', $this->directoryName, true, $this->listNames['public'] . DIRECTORY_SEPARATOR . 'svg');
 
         $this->searchDirectory('resources', 'resourcesDirectory', $this->directoryName);
 
