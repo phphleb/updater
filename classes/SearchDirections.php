@@ -268,14 +268,18 @@ class SearchDirections
 
     public function setDesign($original = 'base') {
         $this->globalDesign = $original;
-        $list =  implode("|", $this->designPatterns);
-        $design = trim($this->log->readline("Which of the following designs to install? $list >"));
-        if(empty($design)){
-            return;
-        }
-        if(!in_array($design, $this->designPatterns)){
-            $this->setDesign($original);
-            return;
+        $design = 'base';
+        if (count($this->designPatterns) > 1) {
+            $list = implode("|", $this->designPatterns);
+            $design = trim($this->log->readline("Which of the following designs to install? $list >"));
+            if (empty($design)) {
+                return;
+            }
+
+            if (!in_array($design, $this->designPatterns)) {
+                $this->setDesign($original);
+                return;
+            }
         }
         Data::setDesign($design);
         $this->globalDesign = $design;
