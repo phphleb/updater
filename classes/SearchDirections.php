@@ -269,6 +269,7 @@ class SearchDirections
     public function setDesign($original = 'base') {
         $this->globalDesign = $original;
         $design = 'base';
+        Data::setDesign($design);
         if (count($this->designPatterns) > 1) {
             $list = implode("|", $this->designPatterns);
             $design = trim($this->log->readline("Which of the following designs to install? $list >"));
