@@ -6,8 +6,8 @@
 
     require __DIR__ . "/FileRemover.php";
 
-    $uploader = new \Phphleb\Updater\FileRemover(__DIR__ . DIRECTORY_SEPARATOR);
+    $remover = new \Phphleb\Updater\FileRemover(__DIR__ . DIRECTORY_SEPARATOR);
 
-    $uploader->setSpecialNames('example-directory', 'ExampleDirectory');
+    $remover->setSpecialNames('example-directory', 'ExampleDirectory');
 
-    $uploader->run();
+    $remover->run();
