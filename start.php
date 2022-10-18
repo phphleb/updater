@@ -33,7 +33,7 @@ function selectAction()
         return false;
     }
 
-    selectAction();
+    return selectAction();
 
 }
 
