@@ -6,7 +6,7 @@
 
     require __DIR__ . "/FileRemover.php";
 
-    $remover = new \Phphleb\Updater\FileRemover(__DIR__ . DIRECTORY_SEPARATOR);
+    $remover = new \Phphleb\Updater\FileRemover(__DIR__ . DIRECTORY_SEPARATOR . "hleb-project-relationship");
 
     $remover->setSpecialNames('example-directory', 'ExampleDirectory');
 
