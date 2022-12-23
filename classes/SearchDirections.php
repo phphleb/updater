@@ -325,9 +325,9 @@ class SearchDirections
         if (!is_dir($projectDir) && in_array($actualName, self::CREATE_IF_EXISTS)) {
             mkdir($projectDir);
         }
-        if ($search && !file_exists($projectDir)) {
+        if ($search && !file_exists($this->baseDirectory . DIRECTORY_SEPARATOR . $actualName)) {
             $actualName = $this->readlineDir($name);
-            if (!file_exists($projectDir)) {
+            if (!file_exists($this->baseDirectory . DIRECTORY_SEPARATOR . $actualName)) {
                 $this->searchDirectory($name, $value, $system, true);
                 return;
             }
