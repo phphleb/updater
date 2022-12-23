@@ -298,6 +298,9 @@ class SearchDirections
      * @param string|null $target - target name
      */
     private function searchDirectory(string $name, string $value, string $system, bool $search = false, $target = null) {
+        if (!is_dir($this->pluginDirectory .  DIRECTORY_SEPARATOR . $name)) {
+            return;
+        }
         $originDirectory = $value . 'Origin';
         $actualName = empty($target) ? $name : $target;
         if ($search && !file_exists($this->baseDirectory . DIRECTORY_SEPARATOR . $actualName)) {
