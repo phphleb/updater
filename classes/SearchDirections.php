@@ -4,6 +4,10 @@ namespace Phphleb\Updater\Classes;
 
 class SearchDirections
 {
+    public const CREATE_IF_EXISTS = [
+        'modules'
+    ];
+
     protected $className = "ExampleDirectory";
 
     protected $directoryName = "example-directory";
@@ -44,6 +48,8 @@ class SearchDirections
 
     protected $routesDirectory;
 
+    protected $modulesDirectory;
+
     protected $middlewareDirectory;
 
     protected $baseDirectoryOrigin;
@@ -71,6 +77,8 @@ class SearchDirections
     protected $vendorDirectoryOrigin;
 
     protected $routesDirectoryOrigin;
+
+    protected $modulesDirectoryOrigin;
 
     protected $middlewareDirectoryOrigin;
 
@@ -144,6 +152,8 @@ class SearchDirections
 
         $this->searchDirectory('app' . DIRECTORY_SEPARATOR . 'Middleware' . DIRECTORY_SEPARATOR . 'Before', 'middlewareDirectory', $this->className);
 
+        $this->searchDirectory('modules', 'modulesDirectory', $this->directoryName);
+
     }
 
     public function getProjectPath() {
@@ -188,6 +198,10 @@ class SearchDirections
 
     public function getRoutesPath() {
         return $this->routesDirectory;
+    }
+
+    public function getModulesPath() {
+        return $this->modulesDirectory;
     }
 
     public function getAppMiddlewareBeforePath() {
@@ -240,6 +254,10 @@ class SearchDirections
 
     public function getRoutesOriginPath() {
         return $this->routesDirectoryOrigin;
+    }
+
+    public function getModulesOriginPath() {
+        return $this->modulesDirectoryOrigin;
     }
 
     public function getAppMiddlewareBeforeOriginPath(){
@@ -303,9 +321,13 @@ class SearchDirections
         }
         $originDirectory = $value . 'Origin';
         $actualName = empty($target) ? $name : $target;
-        if ($search && !file_exists($this->baseDirectory . DIRECTORY_SEPARATOR . $actualName)) {
+        $projectDir = $this->baseDirectory . DIRECTORY_SEPARATOR . $actualName;
+        if (!is_dir($projectDir) && in_array($actualName, self::CREATE_IF_EXISTS)) {
+            mkdir($projectDir);
+        }
+        if ($search && !file_exists($projectDir)) {
             $actualName = $this->readlineDir($name);
-            if (!file_exists($this->baseDirectory . DIRECTORY_SEPARATOR . $actualName)) {
+            if (!file_exists($projectDir)) {
                 $this->searchDirectory($name, $value, $system, true);
                 return;
             }
