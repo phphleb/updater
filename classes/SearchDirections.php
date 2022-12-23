@@ -103,6 +103,14 @@ class SearchDirections
         'storage' => 'storage',
     ];
 
+    protected $upgradeNames = [
+        'public',
+        'public\js',
+        'public\css',
+        'public\images',
+        'public\svg'
+    ];
+
     function __construct(string $pluginDirectory, LogInterface $log, array $designPatterns, string $directoryName, string $className) {
 
         $this->log = $log;
@@ -304,6 +312,14 @@ class SearchDirections
         $this->globalDesign = $design;
     }
 
+    protected function searchReadlineDir(string $path, string $name) {
+        $result = $this->readlineDir($name);
+        if (!$result || !is_dir($path . DIRECTORY_SEPARATOR . $result)) {
+            return $this->searchReadlineDir($path, $name);
+        }
+        return $result;
+    }
+
     protected function readlineDir(string $name) {
         return $this->log->readline("Enter the current '$name' folder name>");
     }
@@ -316,18 +332,18 @@ class SearchDirections
      * @param string|null $target - target name
      */
     private function searchDirectory(string $name, string $value, string $system, bool $search = false, $target = null) {
-        $searchPath = rtrim($this->pluginDirectory, ' \\/') . DIRECTORY_SEPARATOR . (explode(DIRECTORY_SEPARATOR, trim($name, ' \\/'))[0]);
-        if ($search && !is_dir($searchPath)) {
-            return;
-        }
+
         $originDirectory = $value . 'Origin';
         $actualName = empty($target) ? $name : $target;
+        if (in_array($actualName, $this->upgradeNames) && !is_dir($this->pluginDirectory . DIRECTORY_SEPARATOR . $actualName)) {
+            return;
+        }
         $projectDir = $this->baseDirectory . DIRECTORY_SEPARATOR . $actualName;
         if (!is_dir($projectDir) && in_array($actualName, self::CREATE_IF_EXISTS)) {
             mkdir($projectDir);
         }
         if ($search && !file_exists($this->baseDirectory . DIRECTORY_SEPARATOR . $actualName)) {
-            $actualName = $this->readlineDir($name);
+            $actualName = $this->searchReadlineDir($this->baseDirectory, $name);
             if (!file_exists($this->baseDirectory . DIRECTORY_SEPARATOR . $actualName)) {
                 $this->searchDirectory($name, $value, $system, true);
                 return;
