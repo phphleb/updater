@@ -8,6 +8,8 @@ class SearchDirections
         'modules'
     ];
 
+    protected static $combineSearchValues = [];
+
     protected $className = "ExampleDirectory";
 
     protected $directoryName = "example-directory";
@@ -312,10 +314,19 @@ class SearchDirections
         $this->globalDesign = $design;
     }
 
-    protected function searchReadlineDir(string $path, string $name) {
+    protected function searchReadlineDir(string $path, string $name)
+    {
+        $compoundPath = $path . DIRECTORY_SEPARATOR . $name;
+        if (!empty(self::$combineSearchValues[$compoundPath])) {
+            return self::$combineSearchValues[$compoundPath];
+        }
         $result = $this->readlineDir($name);
+
         if (!$result || !is_dir($path . DIRECTORY_SEPARATOR . $result)) {
             return $this->searchReadlineDir($path, $name);
+        }
+        if (empty(self::$combineSearchValues[$compoundPath])) {
+            self::$combineSearchValues[$compoundPath] = $result;
         }
         return $result;
     }
