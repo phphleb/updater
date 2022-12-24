@@ -18,7 +18,7 @@ if (end($argv) === '--remove') {
 } else if (end($argv) === '--add') {
     $action = true;
 } else {
-    exit('For details, repeat the command with the `--help` flag.');
+    exit(PHP_EOL . 'For details, repeat the command with the `--help` flag.' . PHP_EOL);
 }
 
 include __DIR__ . ($action ? "/add_sample.php" : "/remove_sample.php");
