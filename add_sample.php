@@ -4,7 +4,7 @@
      * Demo addition of functionality.
      */
 
-    require __DIR__ . "/FileUploader.php";
+    include_once __DIR__ . "/FileUploader.php";
 
     $designPatterns = ['base', 'dark']; // The first value will be the main
 
