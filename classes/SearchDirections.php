@@ -354,7 +354,7 @@ class SearchDirections
             mkdir($projectDir);
         }
         if ($search && !file_exists($this->baseDirectory . DIRECTORY_SEPARATOR . $actualName)) {
-            $actualName = $this->searchReadlineDir($this->baseDirectory, $name);
+            $actualName = $this->searchReadlineDir($this->baseDirectory, $actualName);
             if (!file_exists($this->baseDirectory . DIRECTORY_SEPARATOR . $actualName)) {
                 $this->searchDirectory($name, $value, $system, true);
                 return;
