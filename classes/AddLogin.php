@@ -51,7 +51,7 @@ class AddLogin
 
         foreach ($iterator as $object) {
             $tag = "[+] CREATED";
-            $destPath = $destDirectory . DIRECTORY_SEPARATOR . $iterator->getSubPathName();
+            $destPath = $destDirectory . DIRECTORY_SEPARATOR . $object->getSubPathName();
             if(file_exists($destPath)) {
                 $tag = '[>] UPDATED';
             }

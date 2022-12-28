@@ -18,8 +18,10 @@ class RemoveLogin
 
     public function run() {
         if($this->origin) {
-            if ($this->confirm('Remove changes from the project?') === false) {
-                return;
+            if (Data::getConfirmationOfDelete()) {
+                if ($this->confirm('Remove changes from the project?') === false) {
+                    return;
+                }
             }
         }
 

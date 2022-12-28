@@ -297,8 +297,16 @@ class SearchDirections
     public function setDesign($original = 'base') {
         $this->globalDesign = $original;
         $design = 'base';
-        Data::setDesign($design);
         if (count($this->designPatterns) > 1) {
+            $globalDesign = Data::getComponentDesignBySpecialName($this->directoryName);
+            if ($globalDesign) {
+                if (!in_array($globalDesign, $this->designPatterns)) {
+                    throw new \ErrorException("Design `$globalDesign` is incorrect");
+                }
+                $this->globalDesign = $design;
+                return;
+            }
+
             $list = implode("|", $this->designPatterns);
             $design = trim($this->log->readline("Which of the following designs to install? $list >"));
             if (empty($design)) {
@@ -310,13 +318,18 @@ class SearchDirections
                 return;
             }
         }
-        Data::setDesign($design);
         $this->globalDesign = $design;
     }
 
     protected function searchReadlineDir(string $path, string $name)
     {
         $compoundPath = $path . DIRECTORY_SEPARATOR . $name;
+        $searchGlobal = Data::getComponentFolderName($name);
+        if ($searchGlobal) {
+            $compoundPath = $path . DIRECTORY_SEPARATOR . $name;
+            self::$combineSearchValues[$compoundPath] = $searchGlobal;
+        }
+
         if (!empty(self::$combineSearchValues[$compoundPath])) {
             return self::$combineSearchValues[$compoundPath];
         }
