@@ -57,7 +57,7 @@ class FileUploader
         if (!Data::isIncludedBySpecialFirstName($this->directoryName)) {
             echo PHP_EOL . "Omitted due to being missing from the config file." . PHP_EOL . PHP_EOL;
 
-            return null;
+            return false;
         }
 
         $updater = new SearchDirections(
@@ -70,11 +70,13 @@ class FileUploader
 
         $updater->setDesign();
 
+        $this->design = $updater->getGlobalDesign();
+
         $updater->run();
 
         (new AddLogin($updater, $this->log))->run();
 
-        $this->design = $updater->getGlobalDesign();
+        return true;
     }
 
 }

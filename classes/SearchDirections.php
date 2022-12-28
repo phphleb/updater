@@ -307,7 +307,7 @@ class SearchDirections
                 if (!in_array($globalDesign, $this->designPatterns)) {
                     throw new \ErrorException("Design `$globalDesign` is incorrect");
                 }
-                $this->globalDesign = $design;
+                $this->globalDesign = $globalDesign;
                 return;
             }
 

@@ -37,7 +37,7 @@ class FileRemover
         if (!Data::isIncludedBySpecialFirstName($this->directoryName)) {
             echo PHP_EOL . "Omitted due to being missing from the config file." . PHP_EOL . PHP_EOL;
 
-            return;
+            return false;
         }
 
         $updater = new SearchDirections($this->directory, $this->log, ['base'], $this->directoryName, $this->className);
@@ -45,6 +45,8 @@ class FileRemover
         $updater->run();
 
         (new RemoveLogin($updater, $this->log, true))->run();
+
+        return true;
     }
 
 }
