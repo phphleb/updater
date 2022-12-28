@@ -294,6 +294,10 @@ class SearchDirections
         return $this->targetList;
     }
 
+    public function getGlobalDesign() {
+        return $this->globalDesign;
+    }
+
     public function setDesign($original = 'base') {
         $this->globalDesign = $original;
         $design = 'base';

@@ -19,6 +19,8 @@ class FileUploader
 
     protected $log;
 
+    protected $design = 'base';
+
     /**
      * Creates file transfer from the specified directory and distributes the project
      * @param string $directory
@@ -36,6 +38,10 @@ class FileUploader
         $this->designPatterns = $patterns;
     }
 
+    public function getDesign() {
+        return $this->design;
+    }
+
     public function setSpecialNames(string $directoryName, string $className){
         $this->directoryName = $directoryName;
         $this->className = $className;
@@ -51,7 +57,7 @@ class FileUploader
         if (!Data::isIncludedBySpecialFirstName($this->directoryName)) {
             echo PHP_EOL . "Omitted due to being missing from the config file." . PHP_EOL . PHP_EOL;
 
-            return;
+            return null;
         }
 
         $updater = new SearchDirections(
@@ -67,6 +73,8 @@ class FileUploader
         $updater->run();
 
         (new AddLogin($updater, $this->log))->run();
+
+        $this->design = $updater->getGlobalDesign();
     }
 
 }
