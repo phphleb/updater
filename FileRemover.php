@@ -5,6 +5,7 @@ namespace Phphleb\Updater;
 use Phphleb\Updater\Classes\OutputLog;
 use Phphleb\Updater\Classes\RemoveLogin;
 use Phphleb\Updater\Classes\SearchDirections;
+use Phphleb\Updater\Classes\Data;
 
 class FileRemover
 {
@@ -32,6 +33,12 @@ class FileRemover
     }
 
     public function run() {
+
+        if (!Data::isIncludedBySpecialFirstName($this->directoryName)) {
+            echo PHP_EOL . "Omitted due to being missing from the config file." . PHP_EOL . PHP_EOL;
+
+            return;
+        }
 
         $updater = new SearchDirections($this->directory, $this->log, ['base'], $this->directoryName, $this->className);
 
