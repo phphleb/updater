@@ -9,20 +9,27 @@ class AddLogin
     protected $log;
 
     protected $num = 0;
-    
+
+    protected $deleteFiles = [];
+
     function __construct(SearchDirections $files, LogInterface $log) {
         $this->files = $files;
         $this->log = $log;
     }
 
     public function run() {
+        $this->deleteFiles = [];
         $errors = $this->files->getErrors();
 
         if (count($errors)) {
             $this->log->die("\n" . "You must create the '" . DIRECTORY_SEPARATOR . $errors[0] . "' directory in project!" . "\n");
         }
-        // Clear all
-        (new RemoveLogin($this->files, $this->log, false))->run();
+
+        $remove = new RemoveLogin($this->files, $this->log, false);
+
+        $remove->run();
+
+        $this->deleteFiles = $remove->getDeleteFiles();
 
         $originList = $this->files->getOriginList();
         $targetList = $this->files->getTargetList();
@@ -51,14 +58,14 @@ class AddLogin
 
         foreach ($iterator as $object) {
             $tag = "[+] CREATED";
-            $destPath = $destDirectory . DIRECTORY_SEPARATOR . $object->getSubPathName();
-            if(file_exists($destPath)) {
+            $destPath = $destDirectory . DIRECTORY_SEPARATOR .  $iterator->getSubPathName();
+
+            if (in_array($destPath, $this->deleteFiles) || in_array(str_replace('-upd', '', $destPath), $this->deleteFiles)) {
                 $tag = '[>] UPDATED';
             }
             ($object->isDir()) ? @mkdir($destPath) : copy($object, $destPath);
             if ($object->isFile()) {
                 if(file_exists($destPath)) {
-
                     $parts = explode('-', $destPath);
                     if(count($parts) && array_pop($parts) === 'upd') {
                         rename($destPath, $destPath = implode('-', $parts));

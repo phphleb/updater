@@ -9,14 +9,22 @@ class RemoveLogin
     protected $log;
 
     protected $origin;
-    
+
+    protected $deleteFiles = [];
+
     function __construct(SearchDirections $files, LogInterface $log, bool $origin = true) {
         $this->files = $files;
         $this->log = $log;
         $this->origin = $origin;
-    }  
+    }
+
+    public function getDeleteFiles(): array
+    {
+        return $this->deleteFiles;
+    }
 
     public function run() {
+        $this->deleteFiles = [];
         if($this->origin) {
             if (Data::getConfirmationOfDelete()) {
                 if ($this->confirm('Remove changes from the project?') === false) {
@@ -43,7 +51,7 @@ class RemoveLogin
             $this->log->print("\n" . "Delete directories: " . $count . "\n");
         }
     }
-    
+
     protected function confirm($message){
         $confirmation = $this->log->readline($message . " Enter Y(yes) or N(no)>");
         if($confirmation == 'Y'){
@@ -59,7 +67,9 @@ class RemoveLogin
         if (file_exists($path)) {
             $files = array_diff(scandir($path), ['.', '..']);
             foreach ($files as $file) {
-                (is_dir($path . '/' . $file)) ? $this->deleteDirectory($path . '/' . $file) : unlink($path . '/' . $file);
+                $file = $path . DIRECTORY_SEPARATOR . $file;
+                $this->deleteFiles[] = $file;
+                (is_dir($file)) ? $this->deleteDirectory($file) : unlink($file);
             }
             return rmdir($path);
         }
