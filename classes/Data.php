@@ -36,7 +36,7 @@ class Data
 
     public static function isIncludedBySpecialFirstName(string $specialFirstName) {
         if (self::$config) {
-            return isset(self::$config['include_special_names'][$specialFirstName]);
+            return isset(self::$config['include_special_names'][$specialFirstName]) || isset(self::$config['components'][$specialFirstName]);
         }
 
         return true;
@@ -45,7 +45,7 @@ class Data
     public static function getComponentDesignBySpecialName(string $specialFirstName): ?string
     {
         if (self::$config) {
-            $design = self::$config['include_special_names'][$specialFirstName] ?? null;
+            $design = self::$config['include_special_names'][$specialFirstName] ?? self::$config['components'][$specialFirstName] ?? null;
             if ($design && !empty($design['design']) && is_string($design['design'])) {
                 return $design['design'];
             }
