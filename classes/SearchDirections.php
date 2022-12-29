@@ -333,7 +333,7 @@ class SearchDirections
             $compoundPath = $path . DIRECTORY_SEPARATOR . $name;
             self::$combineSearchValues[$compoundPath] = $searchGlobal;
             if (!is_dir($path . DIRECTORY_SEPARATOR . $searchGlobal)) {
-                throw new \ErrorException("The folder in the configuration is incorrect. Directory `$searchGlobal` does not exist!");
+                throw new \ErrorException("The folder name in the configuration is incorrect. Directory `$searchGlobal` does not exist!");
             }
             return self::$combineSearchValues[$compoundPath];
         }
