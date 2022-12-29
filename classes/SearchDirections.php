@@ -332,11 +332,12 @@ class SearchDirections
         if ($searchGlobal) {
             $compoundPath = $path . DIRECTORY_SEPARATOR . $name;
             self::$combineSearchValues[$compoundPath] = $searchGlobal;
-        }
-
-        if (!empty(self::$combineSearchValues[$compoundPath])) {
+            if (!is_dir($path . DIRECTORY_SEPARATOR . $searchGlobal)) {
+                throw new \ErrorException("The folder in the configuration is incorrect. Directory `$searchGlobal` does not exist!");
+            }
             return self::$combineSearchValues[$compoundPath];
         }
+
         $result = $this->readlineDir($name);
 
         if (!$result || !is_dir($path . DIRECTORY_SEPARATOR . $result)) {
