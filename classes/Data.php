@@ -34,6 +34,14 @@ class Data
         !is_null(self::$config) or self::$config = $data;
     }
 
+    public static function getEnvironment(string $name, $default = null) {
+        if (self::$config) {
+            return self::$config['environments'][$name] ?? $default;
+        }
+
+        return $default;
+    }
+
     public static function isIncludedBySpecialFirstName(string $specialFirstName) {
         if (self::$config) {
             return isset(self::$config['include_special_names'][$specialFirstName]) || isset(self::$config['components'][$specialFirstName]);
