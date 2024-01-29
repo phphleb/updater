@@ -1,29 +1,25 @@
 {
-    "name": "phphleb/updater",
-    "description": "Auto-update resources in the HLEB framework",
-    "type": "library",
-    "homepage": "https://phphleb.ru",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Foma Tuturov",
-            "email": "fomiash@yandex.ru"
-        }
-    ],
-    "config": {
-        "optimize-autoloader": true
-    },
-    "autoload": {
-        "exclude-from-classmap": ["/hleb-project-relationship/"],
-        "psr-4": {
-            "Phphleb\\Updater\\": "/"
-        }
-    },
-    "require": {
-        "php": ">=7.0.0",
-        "phphleb/framework": ">=1.5.15",
-        "ext-readline": "*"
-    },
-    "minimum-stability": "dev"
-
+  "name": "phphleb/updater",
+  "description": "Auto-update resources in the HLEB2 framework",
+  "type": "library",
+  "homepage": "https://hleb2framework.ru",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Foma Tuturov",
+      "email": "fomiash@yandex.ru"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Phphleb\\Updater\\": "/"
+    }
+  },
+  "require": {
+    "php": ">=8.2.0",
+    "phphleb/framework": ">=2.0.0",
+    "phphleb/nicejson": "*",
+    "ext-readline": "*"
+  },
+  "minimum-stability": "dev"
 }

@@ -1,40 +1,66 @@
-Auto-update resources from the PHP Micro-Framework HLEB
-=====================
+## U_P_D_A_T_E_R
 
-### ! This library is only for updates.
+[![HLEB2](https://img.shields.io/badge/HLEB-2-darkcyan)](https://github.com/phphleb/hleb) ![PHP](https://img.shields.io/badge/PHP-^8.2-blue) [![License: MIT](https://img.shields.io/badge/License-MIT%20(Free)-brightgreen.svg)](https://github.com/phphleb/hleb/blob/master/LICENSE)
 
- If you need to install the framework, use the link: [github.com/phphleb/hleb](https://github.com/phphleb/hleb) 
- 
- A distinctive feature of the micro-framework HLEB is the minimalism of the code and the speed of work. The choice of this framework allows you to launch a full-fledged product with minimal time costs and appeals to documentation; it is easy, simple and fast.
- At the same time, it solves typical tasks, such as routing, shifting actions to controllers, model support, so, the basic MVC implementation. This is the very minimum you need to quickly launch an application.
- 
- 
- ## U_P_D_A_T_E_R
- Install using Composer:
+Автоматическое обновление ресурсов для фреймворка [HLEB2](https://github.com/phphleb/hleb).
+Позволяет разворачивать/откатывать функциональность библиотек в папки проекта, 
+что позволяет соответствовать стандартам использования фреймворка и производить обновления библиотек.
+
+Например, если в библиотеке требуются собственные маршруты и контроллеры, то они будут добавлены к
+другим маршрутам и контроллерам, а впоследствии могут быть оттуда убраны.
+Эти действия производятся консольными командами, одна для добавления, другая для
+отката функциональности.
+Следуя правилам создания такого развертывания по образцам, можно создавать собственные
+библиотеки, обладающие этими свойствами. 
+
+
+### Установка
+
+При помощи Composer:
  ```bash
- $ composer require phphleb/updater
+ composer require phphleb/updater
  ```
+Сама по себе установка этой библиотеки ничего не добавляет в проект.
+Нужны библиотеки, которые можно использовать таким способом. Для понимания
+принципа развертывания можно установить и поэксперементировать с библиотекой
+[phphleb/demo-updater](https://github.com/phphleb/demo-updater).
 
-Library connection samples in files 'start.php', 'add_sample.php' and 'remove_sample.php'.
+Если вы хотите настроить добавление/откат некоторого списка библиотек одной командой на добавление
+и одной на отмену, то используйте библиотеку [phphleb/combinator](https://github.com/phphleb/combinator)
 
-Test run from the root directory of the HLEB project:
+### Опции
+В процессе установки можно выбирать опции установки библиотек (если это в них заложено),
+например, дизайн, как продемонстрировано в [phphleb/demo-updater](https://github.com/phphleb/demo-updater),
+а при установке группой - отключить консольные вопросы и развернуть со значениями
+по умолчанию или согласно общей конфигурации, переданной в [phphleb/combinator](https://github.com/phphleb/combinator). 
 
- ```bash
- $ php console phphleb/updater
- ```
+_Таким образом UPDATER решает проблему обновления вашего проекта и упрощает добавление сторонних решений._
 
-Sample package installation:
+### Структура 
+На примере библиотеки [phphleb/demo-updater](https://github.com/phphleb/demo-updater) можно рассмотреть
+основной принцип строения библиотеки, чтобы она могла быть развернута в проект.
 
- ```bash
- $ php console phphleb/updater --add
- ```
+1) В библиотеке должен находится файл /Deployment/StartForHleb.php с соответствующим классом.
+Этот класс определяет действия при вызове из консольной команды.
+2) Дефолтная конфигурация для развертывания в файле /updater.json
+3) Папка с соответствиями для размещения в проекте, она задается в конфигурации /updater.json
+и для phphleb/demo-updater называется match-directory. В этой папке есть папка config для переноса
+файла конфигурации config.json в директорию /storage/lib/{phphleb}/{demo-updater}/. При существовании
+файла конфигурации он не переносится, так как может быть изменён разработчиком или запросом через Web-сервер.
+Также в папке match-directory есть папка rewrite, её содержимое повторяет структуру каталогов проекта,
+только опции в этой структуре представлены как метки, например, файл /match-directory/rewrite/resources/views/~demo-updater-design/base/index.php-upd
+будет перенесён в проект как /resources/views/demo-updater-design/index.php если был выбран дизайн _base_ при установке.
+Можно также заметить, что от регистра меток зависит итоговое название директории.
 
- ```bash
- $ composer dump-autoload
- ```
+### Консольные команды
 
-Delete common files:
+Фреймворк поддерживает следующий паттерн консольных команд для развертывания:
 
- ```bash
- $ php console phphleb/updater --remove
- ```
+php console **{vendor}/{library}** [ _add | remove | --help_ ] [ _--no-interaction | --config-path= | --quiet_ ]
+
++ **{vendor}/{library}** - название библиотеки для развертывания в качестве основной команды.
++ **add** или **remove** - производимое соответственно добавление или удаление ресурсов библиотеки.
++ **--no-interaction** - не выводить вопросы для выбора опций, будут установлены по умолчанию из конфигурации.
++ **--config-path=** - указание пути из корня проекта, по которому будет использован
+конфигурационный файл. Данные из него подменят данные из основного файла updater.json.
+Например, --config-path=vendor/phphleb/demo-updater/updater.json (путь к файлу по умолчанию, который будет использован и без указания).
