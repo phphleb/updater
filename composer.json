@@ -19,6 +19,7 @@
     "php": ">=8.2.0",
     "phphleb/framework": ">=2.0.0",
     "phphleb/nicejson": "*",
+    "phphleb/spreader": "*",
     "ext-readline": "*"
   },
   "minimum-stability": "dev"
